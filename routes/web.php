@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group([
+        'middleware' => 'auth',
+    ], function () {
+        Route::delete('/posts/{id}', 'PostController@delete')->where('id', '[0-9]+');
+        Route::get('/posts/{id}/edit', 'PostController@edit');
+        Route::put('/posts/{id}', 'PostController@update')->where('id', '[0-9]+');
+        Route::get('/posts', 'PostController@index');
+        Route::get('/posts/{id}', 'PostController@show')->where('id', '[0-9]+');
+        Route::get('/posts/create', 'PostController@create');
+        Route::post('/posts', 'PostController@store');
+    }
+);
