@@ -15,7 +15,7 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <input type="hidden" value="{{ $post->id }}" name="post_id">
-                            <textarea class="form-control" name="description" placeholder="Digite o comentario aqui..."></textarea><br>
+                            <textarea class="form-control" name="description" placeholder="Digite o comentario aqui..." required></textarea><br>
                             <input type="submit" class="btn btn-primary" value="Enviar comentario">
                         </div>
                     </form>    

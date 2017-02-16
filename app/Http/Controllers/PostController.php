@@ -39,19 +39,16 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $inputs = $request->all();
-        $validator = Validator::make($inputs, [
+        $this->validate($request, [
             'title' => 'required',
             'body'  => 'required',
             'slug'  => 'required|unique:posts',
         ]);
-        
-        if ($validator->fails()) {
-            return redirect('/posts/create')->withErrors($validator->errors());
-        }
 
-         $this->post->create(array_merge($inputs, ['user_id' => Auth::user()->id]));
-             return redirect('/posts')->with('success', 'Postagem criada');
+        $inputs = $request->all();
+
+        $this->post->create(array_merge($inputs, ['user_id' => Auth::user()->id]));
+        return redirect('/posts')->with('success', 'Postagem criada');
     }
 
     public function edit($postId)
@@ -65,21 +62,22 @@ class PostController extends Controller
 
     public function update(Request $request, $postId)
     {
-         $inputs = $request->all();
+        $inputs = $request->all();
         
-         $post = $this->post->findOrFail($postId);
-             $post->fill($inputs)
-                ->save();
+        $post = $this->post->findOrFail($postId);
+        
+        $post->fill($inputs)
+                    ->save();
 
-             return redirect('/posts')
-                    ->with('success', 'A postagem foi alterada com sucesso.');
+        return redirect('/posts')
+                        ->with('success', 'A postagem foi alterada com sucesso.');
     }
 
     public function delete($postId)
     {       
-         $this->post->destroy($postId);
+        $this->post->destroy($postId);
 
-             return redirect('/posts')
-                    ->with('success', 'A postagem foi excluída com sucesso.');
+            return redirect('/posts')
+                   ->with('success', 'A postagem foi excluída com sucesso.');
     }
 }
