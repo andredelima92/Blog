@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Comment;
@@ -31,54 +30,21 @@ class CommentController extends Controller
         ]);
     }
 
-   /* public function show($postId)
-    {
-    }
 
-    public function create()
-    {
-        return view('posts.create');
-    }
-*/
     public function store(Request $request)
     {
-        $inputs = array_merge($request->all(), ['user_id' => Auth::user()->id]);
-        
-        $validator = Validator::make($inputs, [
+        $this->validate($request, [
             'description' => 'required',
-            'user_id'     => 'required',
             'post_id'     => 'required',
         ]);
 
-        /*if ($validator->fails()) {
-            return redirect('/comments/'. $inputs['post_id'])->withErrors($validator->errors());
-        }*/
+        $inputs = array_merge($request->all(), ['user_id' => Auth::user()->id]);
 
         $this->comment->create($inputs);
         return redirect('/comments/'. $inputs['post_id'])->with('success', 'Comentario adicionado com sucesso!');
     }
 
-    /*public function edit($postId)
-    {
-        $post = $this->post->findOrFail($postId);
-    
-        return view('posts.edit', [
-            'post' => $post,
-        ]);
-    }
 
-    public function update(Request $request, $postId)
-    {
-         $inputs = $request->all();
-        
-         $post = $this->post->findOrFail($postId);
-             $post->fill($inputs)
-                ->save();
-
-             return redirect('/posts')
-                    ->with('success', 'A postagem foi alterada com sucesso.');
-    }
-*/
     public function delete($commentId, Request $request)
     {    
         $postId =$request->post_id;

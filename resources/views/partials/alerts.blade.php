@@ -16,7 +16,7 @@
                     <strong>Atenção!</strong> {{ session('warning') }}
                 </div>
             @endif
-            @if (isset($errors) && $errors->has(''))
+            @if (count($errors) > 0)
                 <div class="alert alert-danger">
                     <strong>Erro!</strong> Ocorreu(ram) erro(s) durante o processamento:
                     <li>
