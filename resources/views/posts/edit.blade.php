@@ -3,9 +3,12 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Postagens</div>
+                <div class="panel-heading">
+                    <a href="{{Url('/posts/')}}"><span class="glyphicon glyphicon-arrow-left"></span> Voltar</a><br>
+                    Editar Postagem
+                </div>
                 <div class="panel-body">
                    <form method="post" action="/posts/{{ $post->id }}">
                         <input type="hidden" name="_method" value="PUT">

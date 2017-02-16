@@ -39,15 +39,17 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-         $inputs = $request->all();
-         $validator = Validator::make($inputs, [
-           'title' => 'required',
-             'body'  => 'required',
-             'slug'  => 'required|unique:posts',
-         ]);
-           if ($validator->fails()) {
+        $inputs = $request->all();
+        $validator = Validator::make($inputs, [
+            'title' => 'required',
+            'body'  => 'required',
+            'slug'  => 'required|unique:posts',
+        ]);
+        
+        if ($validator->fails()) {
             return redirect('/posts/create')->withErrors($validator->errors());
-           }
+        }
+
          $this->post->create(array_merge($inputs, ['user_id' => Auth::user()->id]));
              return redirect('/posts')->with('success', 'Postagem criada');
     }
