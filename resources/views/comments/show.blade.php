@@ -24,7 +24,7 @@
                     <h4>Comentarios</h4>
                     @foreach ($comments as $comment)
                         <hr>
-                        <p><b>Usuario:</b> {{ $user_name }} -  <b>Postado em:</b>  {{$comment->created_at}} - <b>Atualizado em:</b> {{$comment->updated_at}}</p>
+                        <p><b>Usuario:</b> {{ $user_name }} -  <b>Postado em:</b>  {{$comment->present()->createdAt}} - <b>Atualizado em:</b> {{$comment->present()->updatedAt}}</p>
                         <p>{{$comment->description}}</p>
                         <form method="post" action="/comments/{{ $comment->id }}">
                             <input type="hidden" name="_method" value="DELETE">

@@ -4,23 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Comment;
-use App\Post;
+use App\Repositories\PostRepository;
+use App\Repositories\CommentRepository;
 
 class CommentController extends Controller
 {
-    protected $comment;
     protected $post;
+    protected $comment;
 
-    public function __construct(Comment $Comment, Post $Post)
+    public function __construct(CommentRepository $Comment ,PostRepository $Post)
     {
-        $this->comment = $Comment;
         $this->post    = $Post;
+        $this->comment = $Comment;
     }
 
     public function index($postId)
     {
-        $post = $this->post->find($postId);
+        $post = $this->post->findById($postId);
         $comment = $this->comment->all()->where('post_id' , $postId);
 
         return view('comments.show', [
@@ -47,9 +47,9 @@ class CommentController extends Controller
 
     public function delete($commentId, Request $request)
     {    
-        $postId =$request->post_id;
+        $postId = $request->post_id;
 
-        $this->comment->destroy($commentId);
+        $this->comment->delete($commentId);
 
         return redirect('/comments/'. $postId)
                        ->with('success', 'O comentatio foi excluído com sucesso.');

@@ -13,8 +13,8 @@
                     <p><b>Usuário: </b> {{ $post->user_id }}</p>
                     <p><b>Título: </b> {{ $post->title }}</p>
                     <p><b>Conteúdo: </b> {{ $post->body }}</p>
-                    <p><b>Criado em: </b> {{ $post->created_at }}</p>
-                    <p><b>Atualizado em: </b> {{ $post->updated_at }}</p>
+                    <p><b>Criado em: </b> {{ $post->present()->createdAt }}</p>
+                    <p><b>Atualizado em: </b> {{ $post->present()->updatedAt }}</p> <!--$post->present()->updatedAt -->
                     <div class="col-md-2">
                         <a href="{{ url('/comments/'. $post->id) }}" class="btn btn-info">Comentarios</a>
                     </div>
