@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Post;
+use App\Repositories\PostRepository;
 
 class PostController extends Controller
 {
     protected $post;
 
-    public function __construct(Post $post)
+    public function __construct(PostRepository $post)
     {
         $this->post = $post;
     }
 
     public function index()
     {
-        $posts = $this->post->all();
+        $posts = $this->post->findAll();
         return view('posts.index', [
             'posts' => $posts,
         ]);
@@ -26,7 +25,7 @@ class PostController extends Controller
 
     public function show($postId)
     {
-        $post = $this->post->find($postId);
+        $post = $this->post->findById($postId);
         return view('posts.show', [
             'post' => $post,
         ]);
@@ -53,7 +52,7 @@ class PostController extends Controller
 
     public function edit($postId)
     {
-        $post = $this->post->findOrFail($postId);
+        $post = $this->post->findById($postId);
     
         return view('posts.edit', [
             'post' => $post,
@@ -64,18 +63,15 @@ class PostController extends Controller
     {
         $inputs = $request->all();
         
-        $post = $this->post->findOrFail($postId);
+        $this->post->update($inputs ,$postId);
         
-        $post->fill($inputs)
-                    ->save();
-
         return redirect('/posts')
                         ->with('success', 'A postagem foi alterada com sucesso.');
     }
 
     public function delete($postId)
     {       
-        $this->post->destroy($postId);
+        $this->post->delete($postId);
 
             return redirect('/posts')
                    ->with('success', 'A postagem foi excluída com sucesso.');

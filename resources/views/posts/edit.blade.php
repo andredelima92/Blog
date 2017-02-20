@@ -18,7 +18,7 @@
                             <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="comment">Comentário:</label>
+                            <label for="comment">Conteudo:</label>
                             <textarea class="form-control" rows="5" id="comment" name="body" required>{{ $post->body }}</textarea>
                         </div>
                         <div class="form-group">
